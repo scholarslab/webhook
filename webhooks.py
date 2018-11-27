@@ -2,18 +2,19 @@ import os
 import git
 import subprocess
 from flask import Flask, request, abort
-from dotenv import load_dotenv
 
-load_dotenv()
-secret_key = os.getenv('SECRET_TOKEN')
-path_to_site = "../copy-of-cool-site"
+path_to_site = "/var/www/scholarslab.org"
 BRANCH = 'master'
 
 app = Flask(__name__)
 
+@app.route('/')
+def index():
+    return "Webhook for SLab"
+
 
 @app.route('/payload', methods=['POST'])
-def webhook():
+def webhooks():
     if request.method == 'POST':
         if request.json['ref'] == 'refs/heads/' + BRANCH:
 
@@ -28,4 +29,4 @@ def webhook():
         abort(400)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, host='127.0.0.1', port=5050)
