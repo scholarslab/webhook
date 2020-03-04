@@ -3,6 +3,7 @@ import git
 import subprocess
 from flask import Flask, request, abort
 
+path_to_site = "/var/www/scholarslab.org"
 BRANCH = 'master'
 
 application = Flask(__name__)
@@ -17,13 +18,15 @@ def webhooks():
     if request.method == 'POST':
         if request.json['ref'] == 'refs/heads/' + BRANCH:
 
-            subprocess.Popen(["/var/www/webhooks.scholarslab.org/update-scholarslab.sh"])
+            repo = git.Git(path_to_site)
+            repo.pull('origin', BRANCH)
 
-            return 'Got it!', 202
-        else: 
-            return 'Not the master branch. Not running the update.', 200
+            os.chdir(path_to_site)
+            subprocess.run(["/home/webhooks/.rvm/gems/ruby-2.4.1/wrappers/rake", "publish"])
+
+            return 'Got it!', 200
     else:
         abort(400)
 
 if __name__ == '__main__':
-    application.run(host='127.0.0.1', port=5050)
+    application.run(debug=True, host='127.0.0.1', port=5050)
