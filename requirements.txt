@@ -4,8 +4,10 @@ gitdb2==2.0.5
 GitPython==2.1.11
 gunicorn==19.9.0
 itsdangerous==1.1.0
-Jinja2==2.10
+Jinja2>=2.10.1
 MarkupSafe==1.1.0
 python-dotenv==0.9.1
 smmap2==2.0.5
-Werkzeug==0.14.1
+Werkzeug>=0.15.3
+
+
