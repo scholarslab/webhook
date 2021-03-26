@@ -3,7 +3,6 @@ import git
 import subprocess
 from flask import Flask, request, abort
 
-BRANCH = 'master'
 
 application = Flask(__name__)
 
@@ -15,9 +14,22 @@ def index():
 @application.route('/payload', methods=['POST'])
 def webhooks():
     if request.method == 'POST':
-        if request.json['ref'] == 'refs/heads/' + BRANCH:
+        if request.json['ref'] == 'refs/heads/master':
 
             subprocess.Popen(["/var/www/webhooks.scholarslab.org/update-scholarslab.sh"])
+
+            return 'Got it!', 202
+        else: 
+            return 'Not the master branch. Not running the update.', 200
+    else:
+        abort(400)
+
+@application.route('/connection', methods=['POST'])
+def connection():
+    if request.method == 'POST':
+        if request.json['ref'] == 'refs/heads/master':
+
+            subprocess.Popen(["/var/www/webhooks.scholarslab.org/update-connection.sh"])
 
             return 'Got it!', 202
         else: 
