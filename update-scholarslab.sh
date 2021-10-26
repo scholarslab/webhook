@@ -14,8 +14,8 @@ git checkout .
 git pull
 
 echo "Run rake task to build the site"
-/home/webhooks/.rvm/gems/ruby-2.4.1/wrappers/bundle install
-/home/webhooks/.rvm/gems/ruby-2.4.1/wrappers/rake publish
+/home/webhooks/.rvm/gems/ruby-2.7.3/wrappers/bundle install
+/home/webhooks/.rvm/gems/ruby-2.7.3/wrappers/rake publish
 
 echo "Copy newly built files to the live site directory"
 rsync -avz --delete --compress --inplace -H -A -X $REPO_SITE $SITE_PATH
