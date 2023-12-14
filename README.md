@@ -60,7 +60,7 @@ Gunicorn should be installed using a python virtual environment.
 - Activate the virtual environment
     - `source .venv/bin/activate`
 - Install modules
-    - `pip install -r requirements`
+    - `pip install -r requirements.txt`
 
 # Supervisor
 Supervisor is a service that keeps Gunicorn running, even with system reboots
