@@ -6,17 +6,12 @@ from flask import Flask, request, abort
 
 application = Flask(__name__)
 
-@application.route('/')
-def index():
-  return "Webhooks for Scholars' Lab"
-
-
-@application.route('/payload', methods=['POST'])
+@application.route('/', methods=['POST'])
 def webhooks():
     if request.method == 'POST':
         if request.json['ref'] == 'refs/heads/master':
 
-            subprocess.Popen(["/var/www/webhooks.scholarslab.org/update-scholarslab.sh"])
+            subprocess.Popen(["/var/www/slab/webhooks.scholarslab.org/update-scholarslab.sh"])
 
             return 'Got it!', 202
         else: 
@@ -29,7 +24,7 @@ def connection():
     if request.method == 'POST':
         if request.json['ref'] == 'refs/heads/master':
 
-            subprocess.Popen(["/var/www/webhooks.scholarslab.org/update-connection.sh"])
+            subprocess.Popen(["/var/www/slab/webhooks.scholarslab.org/update-connection.sh"])
 
             return 'Got it!', 202
         else: 
